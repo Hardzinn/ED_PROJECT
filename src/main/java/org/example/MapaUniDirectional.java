@@ -19,7 +19,7 @@ public class MapaUniDirectional extends Mapa{
             int j = rand.nextInt(numVertices);
             if(i != j && adjMatrix[i][j] == Double.POSITIVE_INFINITY) {
                 int distancia = rand.nextInt(MAX_DISTANCE) + 1;
-                adjMatrix[i][j] = distancia; // Add edge from i to j
+                adjMatrix[i][j] = distancia;
                 edgeCount++;
             }
         }

@@ -2,13 +2,8 @@ package org.example;
 
 import Estruturas.Graphs.Network;
 import Estruturas.Lists.ArrayUnorderedList;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -51,6 +46,17 @@ public class Mapa extends Network<Integer> {
         }
     }
 
+    public double[] getCoords(int vertice){
+        return this.getAdjMatrix()[vertice];
+    }
+
+    public double[][] getAdjMatrix(){
+        return this.adjMatrix;
+    }
+
+    public boolean edgeExists(int source, int target) {
+        return adjMatrix[source][target] != Double.POSITIVE_INFINITY;
+    }
 
     public Iterable<Integer> getNeighbors(int vertex) {
 
