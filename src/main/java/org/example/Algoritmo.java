@@ -66,7 +66,7 @@ public class Algoritmo  {
 
             iter = mapa.iteratorBFS(startVertex);
 
-            if (iter.hasNext()) {
+            while (iter.hasNext()) {
                 positions.add((Integer) iter.next());
             }
 
