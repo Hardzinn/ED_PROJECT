@@ -2,6 +2,8 @@ package org.example;
 
 import Estruturas.Graphs.Network;
 import Estruturas.Lists.ArrayUnorderedList;
+import Estruturas.Queues.LinkedQueue;
+import Exceptions.EmptyCollectionException;
 
 import java.io.*;
 import java.util.Iterator;
@@ -90,9 +92,47 @@ public class Mapa extends Network<Integer> {
     //toDo - implementar o método para exportar o mapa para um ficheiro CSV
 
 
+    protected Iterator<Integer> iteratorMST(Mapa mapa, Integer startVertex) {
+        LinkedQueue<Integer> queue = new LinkedQueue<>();
+        ArrayUnorderedList<Integer> resultList = new ArrayUnorderedList<>();
+        if (mapa.getNumVertices() == 0) {
+            return resultList.iterator();
+        }
+        boolean[] visited = new boolean[mapa.getNumVertices()];
+
+        for(int i = 0; i < mapa.getNumVertices(); i++) {
+            visited[i] = false;
+        }
+
+        double[][] adjMatrix = mapa.getAdjMatrix();
+
+        queue.enqueue(startVertex);
+        visited[startVertex] = true;
+
+        while (!queue.isEmpty()) {
+            int vertex = -1;
+            try {
+                vertex = queue.dequeue();
+            } catch (EmptyCollectionException e) {
+                System.out.println(e.getMessage());
+            }
+
+            resultList.addToRear(vertex);
+
+            for (int i = 0; i < mapa.getNumVertices(); i++) {
+                if (adjMatrix[vertex][i] != Double.POSITIVE_INFINITY && !visited[i]) {
+                    queue.enqueue(i);
+                    visited[i] = true;
+                }
+            }
+        }
+
+        return resultList.iterator();
+    }
+
     @Override
     public String toString() {
-        String result = "Mapa Adjacency Matrix:\n     "; // Start with the matrix title
+        String result = "Mapa Adjacency Matrix:\n     ";
 
         // Column headers for the matrix
         for (int i = 0; i < numVertices; i++) {
@@ -102,22 +142,19 @@ public class Mapa extends Network<Integer> {
 
         // Matrix rows
         for (int i = 0; i < numVertices; i++) {
-            result += String.format("%4d ", i); // Row header
+            result += String.format("%4d ", i);
             for (int j = 0; j < numVertices; j++) {
                 if (adjMatrix[i][j] == Double.POSITIVE_INFINITY) {
                     result += "  N/A";
                 } else {
-                    // Adjusted for consistency and clarity
                     result += String.format("%5.1f", adjMatrix[i][j]);
                 }
             }
-            result += "\n"; // New line at the end of each row
+            result += "\n";
         }
 
-        // Append a separator between the matrix and the list of connections
         result += "\nConnections:\n";
 
-        // List of connections
         for (int i = 0; i < numVertices; i++) {
             for (int j = 0; j < numVertices; j++) {
                 if (adjMatrix[i][j] != Double.POSITIVE_INFINITY) {

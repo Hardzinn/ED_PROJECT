@@ -13,15 +13,10 @@ public class AlgoritmoTeste {
 
         Algoritmo algoritmo = new Algoritmo(new Player("Player 1"));
 
-        algoritmo.shortestPath(mapa, 0, 4);
-        System.out.println("Shortest Path : " + algoritmo.getPositions());
 
-        algoritmo.BFS(mapa,1);
-        System.out.println("DFS Path: " + algoritmo.getPositions());
+        algoritmo.minimumTree(mapa, 1);
+        System.out.println("Minimum Tree: " + algoritmo.getPositions());
 
-        System.out.println(algoritmo.getPositions().toString());
 
-        algoritmo.minimumTree(mapa, 0);
-        System.out.println(algoritmo.getPositions().toString());
     }
 }

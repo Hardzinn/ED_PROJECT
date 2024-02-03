@@ -1,15 +1,13 @@
 package org.example;
 
-import Estruturas.Graphs.Network;
 import Estruturas.Lists.ArrayOrderedList;
-import Estruturas.Queues.LinkedQueue;
 import Exceptions.EmptyCollectionException;
 import Exceptions.NonComparableElementException;
 import Exceptions.VertexNotFoundException;
 
 import java.util.Iterator;
 
-public class Algoritmo extends Network<Integer> {
+public class Algoritmo  {
 
     private Player player;
     private ArrayOrderedList<Integer> positions;
@@ -17,6 +15,7 @@ public class Algoritmo extends Network<Integer> {
 
     public Algoritmo(Player player) {
         this.player = player;
+        this.positions = new ArrayOrderedList<>();
     }
 
     public ArrayOrderedList<Integer> getPositions() {
@@ -76,50 +75,18 @@ public class Algoritmo extends Network<Integer> {
         }
     }
 
-
     public void minimumTree(Mapa mapa, Integer startVertex) {
         try {
-            iter = this.iteratorMinimumSpanningTree(mapa,startVertex);
+            iter = mapa.iteratorMST(mapa,startVertex);
 
             while (iter.hasNext()) {
                 positions.add((Integer) iter.next());
             }
 
-        } catch (NonComparableElementException | EmptyCollectionException e) {
+        } catch (NonComparableElementException e) {
             throw new RuntimeException(e);
         }
     }
-
-    protected Iterator<Integer> iteratorMinimumSpanningTree(Mapa mapa,Integer startVertex) throws NonComparableElementException, EmptyCollectionException {
-
-        LinkedQueue<Integer> traversalQueue = new LinkedQueue<>();
-        ArrayOrderedList<Integer> resultList = new ArrayOrderedList<>();
-        boolean[] visited = new boolean[mapa.size()];
-
-        if (isEmpty()) {
-            return resultList.iterator();
-        }
-
-        traversalQueue.enqueue(startVertex);
-
-        while (!traversalQueue.isEmpty()) {
-            int currentVertex = traversalQueue.dequeue();
-
-            if (!visited[currentVertex]) {
-                resultList.add(currentVertex);
-                visited[currentVertex] = true;
-            }
-
-            for (int i = 0; i < mapa.size(); i++) {
-                if (mapa.edgeExists(currentVertex, i) && !visited[i]) {
-                    traversalQueue.enqueue(i);
-                }
-            }
-        }
-
-        return resultList.iterator();
-    }
-
 
 
 }
