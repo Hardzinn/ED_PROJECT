@@ -100,17 +100,11 @@ public class PlayerMenu {
                 //Bot bot= new Bot(game.getFlag().getPositionFlag( ), algoritmo);
                 break;
 
+
             case 2:
-                try {
-                    algoritmo.DFS(game.getMapa(), flag.getPositionFlag());
-                } catch (EmptyCollectionException e) {
-                    throw new RuntimeException(e);
-                }
-                break;
-            case  3:
                 algoritmo.shortestPath(game.getMapa(),game.getPlayer1().getPositionFlag(), game.getPlayer2().getPositionFlag());
                 break;
-            case 4:
+            case 3:
                 // arvore geradora
                 break;
             default:

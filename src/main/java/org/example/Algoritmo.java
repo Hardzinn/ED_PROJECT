@@ -1,7 +1,6 @@
 package org.example;
 
 import Estruturas.Lists.ArrayOrderedList;
-import Exceptions.EmptyCollectionException;
 import Exceptions.NonComparableElementException;
 import Exceptions.VertexNotFoundException;
 
@@ -29,12 +28,10 @@ public class Algoritmo  {
     public void shortestPath(Mapa mapa, int startVertex, int lastVertex) {
         try {
 
-            ArrayOrderedList<Integer> dados= new ArrayOrderedList<>();
             iter = mapa.iteratorShortestPath(startVertex, lastVertex);
 
             while (iter.hasNext()) {
-                dados.add((Integer) iter.next());
-                positions=dados;
+                positions.add((Integer) iter.next());
             }
 
         } catch (NonComparableElementException | VertexNotFoundException e) {
@@ -42,23 +39,6 @@ public class Algoritmo  {
         }
     }
 
-
-    public void DFS(Mapa mapa, Integer startVertex) throws EmptyCollectionException {
-        try {
-
-            ArrayOrderedList<Integer> dados= new ArrayOrderedList<>();
-            iter = mapa.iteratorDFS(startVertex);
-
-            while (iter.hasNext()) {
-                dados.add((Integer) iter.next());
-                positions=dados;
-            }
-
-
-        } catch (NonComparableElementException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public void BFS(Mapa mapa, Integer startVertex) {
 
@@ -77,6 +57,7 @@ public class Algoritmo  {
 
     public void minimumTree(Mapa mapa, Integer startVertex) {
         try {
+
             iter = mapa.iteratorMST(mapa,startVertex);
 
             while (iter.hasNext()) {
