@@ -11,7 +11,7 @@ public class MapaUniDirectional extends Mapa{
     @Override
     public void addConnection(int numVertices, int density) {
         Random rand = new Random();
-        int maxEdges = (int) ((numVertices * (numVertices - 1) / 2) * (density / 100.0));
+        int maxEdges = (int) ((numVertices * (numVertices - 1)) * (density / 100.0));
         int edgeCount = 0;
 
         while (edgeCount < maxEdges) {

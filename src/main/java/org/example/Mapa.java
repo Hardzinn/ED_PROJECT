@@ -4,6 +4,7 @@ import Estruturas.Graphs.Network;
 import Estruturas.Lists.ArrayUnorderedList;
 
 import java.io.*;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -58,6 +59,17 @@ public class Mapa extends Network<Integer> {
         return adjMatrix[source][target] != Double.POSITIVE_INFINITY;
     }
 
+
+    public Iterable<Integer> getVertices() {
+        ArrayUnorderedList<Integer> vertices = new ArrayUnorderedList<>();
+        for (int i = 0; i < numVertices; i++) {
+            vertices.addToRear(i);
+        }
+        return vertices;
+    }
+
+
+
     public Iterable<Integer> getNeighbors(int vertex) {
 
         ArrayUnorderedList<Integer> neighbors = new ArrayUnorderedList<>();
@@ -68,6 +80,7 @@ public class Mapa extends Network<Integer> {
         }
         return neighbors;
     }
+
 
     //toDo - implementar o método para importar o mapa de um ficheiro CSV
     //toDo - implementar o método para exportar o mapa para um ficheiro CSV
