@@ -29,10 +29,13 @@ public class Algoritmo extends Network<Integer> {
 
     public void shortestPath(Mapa mapa, int startVertex, int lastVertex) {
         try {
+
+            ArrayOrderedList<Integer> dados= new ArrayOrderedList<>();
             iter = mapa.iteratorShortestPath(startVertex, lastVertex);
 
             while (iter.hasNext()) {
-                positions.add((Integer) iter.next());
+                dados.add((Integer) iter.next());
+                positions=dados;
             }
 
         } catch (NonComparableElementException | VertexNotFoundException e) {
@@ -44,14 +47,14 @@ public class Algoritmo extends Network<Integer> {
     public void DFS(Mapa mapa, Integer startVertex) throws EmptyCollectionException {
         try {
 
+            ArrayOrderedList<Integer> dados= new ArrayOrderedList<>();
             iter = mapa.iteratorDFS(startVertex);
 
-            if (iter.hasNext()) {
-                positions.add((Integer) iter.next());
+            while (iter.hasNext()) {
+                dados.add((Integer) iter.next());
+                positions=dados;
             }
 
-            /* if (lastVertex.equals(flag.getPositionFlag()))
-                flag.capture(player); */
 
         } catch (NonComparableElementException e) {
             throw new RuntimeException(e);

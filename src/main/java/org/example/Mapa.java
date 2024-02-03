@@ -82,6 +82,10 @@ public class Mapa extends Network<Integer> {
     }
 
 
+    public int getNumVertices(){
+        return numVertices;
+    }
+
     //toDo - implementar o método para importar o mapa de um ficheiro CSV
     //toDo - implementar o método para exportar o mapa para um ficheiro CSV
 
