@@ -1,5 +1,9 @@
 package org.example;
 
+import Exceptions.EmptyCollectionException;
+import Exceptions.NonComparableElementException;
+
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -8,6 +12,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int choice;
         Mapa mapa = null;
+        Game game = null;
+
 
         do {
             System.out.println("\nGame Menu:");
@@ -34,12 +40,13 @@ public class Main {
                     System.out.print("Choose map type (1 for Unidirectional, 2 for Bidirectional): ");
                     int mapType = scanner.nextInt();
                     System.out.println("New game started with " + numLoc + " locations and density " + density + "%.");
-                    switch (mapType){
+                    switch (mapType) {
                         case 1:
                             MapaUniDirectional mapaUniDirectional = new MapaUniDirectional();
                             mapaUniDirectional.createMap(numLoc, density);
                             System.out.println(mapaUniDirectional.toString());
                             mapa = mapaUniDirectional;
+
                             break;
                         case 2:
                             mapa = new Mapa();
@@ -50,6 +57,9 @@ public class Main {
                             System.out.println("Invalid choice. Defaulting to Bidirectional map.");
                             break;
                     }
+
+                    game = new Game(mapa);
+                    game.setMapa(mapa);
                     break;
                 case 2:
                     // Load map
@@ -73,8 +83,42 @@ public class Main {
                 default:
                     System.out.println("Invalid choice. Please enter a number between 1 and 4.");
             }
+
+            game = new Game(mapa);
+            game.setMapa(mapa);
+
         } while (choice != 4);
+
+
+        new FlagMenu(game).flagMenu();
+
+
+        try {
+            new BotMenu(game).menuGeral(game.getPlayer1().getName());
+            new BotMenu(game).menuGeral(game.getPlayer2().getName());
+            //Player player = game.determineTurnOrder();
+            //game.playGame(player);
+
+            Player player = game.determineTurnOrder();
+
+            int ordem = 0;
+            while (player.getFlag().getStatus() != FlagStatus.CAPTURED) {
+                ordem = game.playRound(player);
+            }
+
+          /* while (!game.getGameStatus()){
+               game.playRoundToBase(ordem);
+           }*/
+
+            //game.playGame();
+        } catch (NonComparableElementException e) {
+            throw new RuntimeException(e);
+        } catch (EmptyCollectionException e) {
+            throw new RuntimeException(e);
+        }
+
 
         scanner.close();
     }
+
 }

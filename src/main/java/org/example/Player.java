@@ -1,21 +1,28 @@
 package org.example;
 
 import Estruturas.Lists.ArrayOrderedList;
+import Estruturas.Lists.ArrayUnorderedList;
 import Exceptions.NonComparableElementException;
 import Exceptions.EmptyCollectionException;
+
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Player {
     private String name;
     private int numPlayer;
     private int numBots;
+    private int botIndex;
     private Flag flag;
 
-    private int positionFlag;
+
     private ArrayOrderedList<Bot> bots;
 
     public Player(String name) {
         this.name = name;
-        //this.flag = flag;
+        this.bots = new ArrayOrderedList<Bot>();
+        this.botIndex = 0;
     }
 
     public String getName() {
@@ -63,49 +70,40 @@ public class Player {
     }
 
 
-    public void addBot(Bot bot) {
-        try {
-            bots.add(bot);
-            numBots++;
-        } catch (NonComparableElementException e) {
-            throw new RuntimeException(e);
-        }
+    //diferent
 
+
+    public int moveBot(Player player) throws EmptyCollectionException, NonComparableElementException {
+        Bot currentBot = bots.get(botIndex);
+
+        System.out.println(player.getName());
+        for (int i = 0; i < numBots; i++) {
+            currentBot.move();
+        }
+        botIndex = (botIndex + 1) % bots.size(); // Alterna entre os bots
+
+        if (currentBot.hasFlag()) {
+            flag.capture(player);
+
+            return 1;
+        }
+        return 0;
     }
 
-    public void movePositionToFlag() {
-        try {
+    public int moveBotToBase(Player player) throws EmptyCollectionException, NonComparableElementException {
+        Bot currentBot = bots.get(botIndex);
 
-            Bot atual = this.bots.removeFirst();
-            atual.movePositionToFlag();
-            this.bots.add(atual);
-
-        } catch (EmptyCollectionException e) {
-            throw new RuntimeException(e);
-        } catch (NonComparableElementException e) {
-            throw new RuntimeException(e);
+        System.out.println(player.getName());
+        for (int i = 0; i < numBots; i++) {
+            currentBot.moveToBase();
         }
-    }
+        botIndex = (botIndex + 1) % bots.size(); // Alterna entre os bots
 
+        if (currentBot.hasFlag()) {
+            flag.capture(player);
 
-    public void movePositionToBase() {
-        try {
-
-            Bot atual = this.bots.removeLast();
-            atual.movePositionToBase();
-            this.bots.add(atual);
-
-        } catch (EmptyCollectionException e) {
-            throw new RuntimeException(e);
-        } catch (NonComparableElementException e) {
-            throw new RuntimeException(e);
+            return 1;
         }
+        return 0;
     }
-
-
-
-
-
-
-
 }
