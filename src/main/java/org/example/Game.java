@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Random;
+
 public class Game {
 
     private Mapa mapa;
@@ -34,5 +36,15 @@ public class Game {
         this.player2 = player2;
     }
 
+
+    public void randPlayerChoice(){
+        Random rand = new Random();
+        int choice = rand.nextInt(2);
+        if(choice == 0){
+            System.out.println("Player 1 starts!");
+        }else{
+            System.out.println("Player 2 starts!");
+        }
+    }
 
 }
