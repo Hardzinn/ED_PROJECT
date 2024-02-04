@@ -1,7 +1,11 @@
-package org.example;
+package Menus;
 
 import Estruturas.Lists.ArrayOrderedList;
 import Exceptions.NonComparableElementException;
+import org.example.Algoritmo;
+import org.example.Bot;
+import org.example.Game;
+import org.example.Player;
 
 import java.util.Scanner;
 

@@ -1,6 +1,10 @@
-package org.example;
+package Menus;
 
 import Exceptions.NonComparableElementException;
+import org.example.Flag;
+import org.example.Game;
+import org.example.Mapa;
+import org.example.Player;
 
 import java.util.Scanner;
 

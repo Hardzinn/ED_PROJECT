@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class MapaUniDirectional extends Mapa{
 
-    MapaUniDirectional() {
+    public MapaUniDirectional() {
         super();
     }
 
