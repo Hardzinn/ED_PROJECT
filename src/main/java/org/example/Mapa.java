@@ -6,10 +6,10 @@ import Estruturas.Queues.LinkedQueue;
 import Exceptions.EmptyCollectionException;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
-
 
 public class Mapa extends Network<Integer> {
 
@@ -88,9 +88,30 @@ public class Mapa extends Network<Integer> {
         return numVertices;
     }
 
-    //toDo - implementar o método para importar o mapa de um ficheiro CSV
-    //toDo - implementar o método para exportar o mapa para um ficheiro CSV
 
+    public void exportMap(Mapa mapa,String filename) {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename));
+            out.writeObject(mapa);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public Mapa importMap(String filename) {
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
+            Mapa mapa = (Mapa) in.readObject();
+            in.close();
+            return mapa;
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     protected Iterator<Integer> iteratorMST(Mapa mapa, Integer startVertex) {
         LinkedQueue<Integer> queue = new LinkedQueue<>();
