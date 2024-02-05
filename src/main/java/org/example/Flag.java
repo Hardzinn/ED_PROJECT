@@ -22,10 +22,19 @@ public class Flag {
         updateGameStateForCapture(player);
     }
 
+    public void capturetoBase(Player player){
+        //comparar a posição do bot do player inimigo com a posição da flag
+        this.status = FlagStatus.CAPTURETOBASE;
+        updateGameStateForCaptureToBase(player);
+    }
+
     private void updateGameStateForCapture(Player player) {
         System.out.println("Flag captured by " + player.getName());
     }
 
+    private void updateGameStateForCaptureToBase(Player player) {
+        System.out.println("Flag captured in the base by " + player.getName());
+    }
 
     public void reset(int newPositionFlag) {
         this.positionFlag = newPositionFlag;

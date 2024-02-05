@@ -2,10 +2,7 @@ package Menus;
 
 import Estruturas.Lists.ArrayOrderedList;
 import Exceptions.NonComparableElementException;
-import org.example.Algoritmo;
-import org.example.Bot;
-import org.example.Game;
-import org.example.Player;
+import org.example.*;
 
 import java.util.Scanner;
 
@@ -40,21 +37,31 @@ public class BotMenu {
         //game.getPlayer1().setBots(algorithmChoice(numBots, game.getPlayer1().getFlag().getPositionFlag(), game.getPlayer2().getFlag().getPositionFlag(),game.getPlayer1()));
         //game.getPlayer2().setBots(algorithmChoice(numBots, game.getPlayer2().getFlag().getPositionFlag(), game.getPlayer1().getFlag().getPositionFlag(),game.getPlayer2()));
 
+        if(game.getMapaType() == 1) {
+            if (namePlayer.equals(game.getPlayer1().getName())) {
+                game.getPlayer1().setBots(algorithmChoiceUni(numBots, game.getPlayer1().getFlag().getPositionFlag(), game.getPlayer2().getFlag().getPositionFlag(), game.getPlayer1()));
+                game.getPlayer1().setNumBots(numBots);
 
-        if (namePlayer.equals(game.getPlayer1().getName())) {
-            game.getPlayer1().setBots(algorithmChoice(numBots, game.getPlayer1().getFlag().getPositionFlag(), game.getPlayer2().getFlag().getPositionFlag(), game.getPlayer1()));
-            game.getPlayer1().setNumBots(numBots);
+            } else if (namePlayer.equals(game.getPlayer2().getName())) {
+                game.getPlayer2().setBots(algorithmChoiceUni(numBots, game.getPlayer2().getFlag().getPositionFlag(), game.getPlayer1().getFlag().getPositionFlag(), game.getPlayer2()));
+                game.getPlayer2().setNumBots(numBots);
+            }
+        }else {
+            if (namePlayer.equals(game.getPlayer1().getName())) {
+                game.getPlayer1().setBots(algorithmChoiceBid(numBots, game.getPlayer1().getFlag().getPositionFlag(), game.getPlayer2().getFlag().getPositionFlag(), game.getPlayer1()));
+                game.getPlayer1().setNumBots(numBots);
 
-        } else if (namePlayer.equals(game.getPlayer2().getName())) {
-            game.getPlayer2().setBots(algorithmChoice(numBots, game.getPlayer2().getFlag().getPositionFlag(), game.getPlayer1().getFlag().getPositionFlag(), game.getPlayer2()));
-            game.getPlayer2().setNumBots(numBots);
+            } else if (namePlayer.equals(game.getPlayer2().getName())) {
+                game.getPlayer2().setBots(algorithmChoiceBid(numBots, game.getPlayer2().getFlag().getPositionFlag(), game.getPlayer1().getFlag().getPositionFlag(), game.getPlayer2()));
+                game.getPlayer2().setNumBots(numBots);
+            }
         }
 
         System.out.println("Bots created with success");
     }
 
 
-    public ArrayOrderedList<Bot> algorithmChoice(int numBots, int start, int end, Player player) throws NonComparableElementException {
+    public ArrayOrderedList<Bot> algorithmChoiceUni(int numBots, int start, int end, Player player) throws NonComparableElementException {
         int option;
         ArrayOrderedList<Bot> bots = new ArrayOrderedList<Bot>();
         Scanner scanner = new Scanner(System.in);
@@ -74,26 +81,82 @@ public class BotMenu {
 
                 switch (option) {
                     case 1:
-                        Bot bot = new Bot(start, end, algoritmo);
+                        Bot bot = new Bot(start, end, algoritmo, false);
                         algoritmo.BFS(game.getMapa(), start);
                         bot.setPositions(algoritmo.getPositions());
-                        //player.addBot(bot);
+                        algoritmo.BFS(game.getMapa(), end);
+                        bot.setPositionsBase(algoritmo.getPositions());
                         bots.add(bot);
                         break;
 
                     case 2:
-                        Bot bot1 = new Bot(start, end, algoritmo);
+                        Bot bot1 = new Bot(start, end, algoritmo,false);
                         algoritmo.shortestPath(game.getMapa(), start, end);
                         bot1.setPositions(algoritmo.getPositions());
-                        //player.addBot(bot);
+                        algoritmo.shortestPath(game.getMapa(), end, start);
+                        bot1.setPositionsBase(algoritmo.getPositions());
                         bots.add(bot1);
                         break;
 
                     case 3:
-                        Bot bot2 = new Bot(start, end, algoritmo);
+                        Bot bot2 = new Bot(start, end, algoritmo,false);
                         algoritmo.minimumTree(game.getMapa(), start);
                         bot2.setPositions(algoritmo.getPositions());
-                        //player.addBot(bot);
+                        algoritmo.minimumTree(game.getMapa(), end);
+                        bot2.setPositionsBase(algoritmo.getPositions());
+                        bots.add(bot2);
+                        break;
+
+                    default:
+                        System.out.println("Invalid option");
+                        break;
+                }
+
+                i--;
+            } while (option < 0 || option > 3);
+        }
+
+        System.out.println("\nCreating bots ...");
+        return bots;
+    }
+
+    public ArrayOrderedList<Bot> algorithmChoiceBid(int numBots, int start, int end, Player player) throws NonComparableElementException {
+        int option;
+        ArrayOrderedList<Bot> bots = new ArrayOrderedList<Bot>();
+        Scanner scanner = new Scanner(System.in);
+
+        Algoritmo algoritmo = new Algoritmo(player);
+
+
+        for (int i = 0; i < numBots; i++) {
+            i++;
+            do {
+                System.out.println("\nChoose the algorithm to bot " + i + ": ");
+                System.out.println("1 - BFS");
+                System.out.println("2 - Shortest Path");
+                System.out.println("3 - Minimum Cost Spanning Tree");
+
+                option = scanner.nextInt();
+
+                switch (option) {
+                    case 1:
+                        Bot bot = new Bot(start, end, algoritmo,false);
+                        algoritmo.BFS(game.getMapa(), start);
+                        bot.setPositions(algoritmo.getPositions());
+                        bots.add(bot);
+                        break;
+
+                    case 2:
+                        Bot bot1 = new Bot(start, end, algoritmo,false);
+                        algoritmo.shortestPath(game.getMapa(), start, end);
+                        bot1.setPositions(algoritmo.getPositions());
+                        bots.add(bot1);
+                        break;
+
+                    case 3:
+                        Bot bot2 = new Bot(start, end, algoritmo,false);
+                        algoritmo.minimumTree(game.getMapa(), start);
+                        bot2.setPositions(algoritmo.getPositions());
                         bots.add(bot2);
                         break;
 

@@ -1,6 +1,5 @@
 package Menus;
 
-import Exceptions.EmptyCollectionException;
 import org.example.*;
 
 import java.util.Scanner;

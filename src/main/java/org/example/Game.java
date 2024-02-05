@@ -5,20 +5,26 @@ import java.util.Random;
 import Exceptions.EmptyCollectionException;
 import Exceptions.NonComparableElementException;
 
-import java.util.Iterator;
-import java.util.Random;
 
 public class Game {
 
     private Mapa mapa;
     private Player player1;
     private Player player2;
-
+    private int p1;
+    private int p2;
+    private int modCount1;
+    private int modCount2;
+    private int mapaType;
     private Flag flag;
     private boolean gameOver;
 
     public Game(Mapa mapa) {
         this.mapa = mapa;
+        this.modCount1 = 0;
+        this.modCount2 = 0;
+        this.p1 = 0;
+        this.p2 = 0;
     }
 
     public Mapa getMapa() {
@@ -61,6 +67,34 @@ public class Game {
         this.gameOver = gameOver;
     }
 
+    public void setWinner(Player player) {
+        System.out.println("The winner is " + player.getName());
+    }
+
+    public void setMapaType(int mapaType) {
+        this.mapaType = mapaType;
+    }
+
+    public int getMapaType() {
+        return this.mapaType;
+    }
+
+    public int getP1() {
+        return p1;
+    }
+
+    public void setP1(int p1) {
+        this.p1 = p1;
+    }
+
+    public int getP2() {
+        return p2;
+    }
+
+    public void setP2(int p2) {
+        this.p2 = p2;
+    }
+
     //diferente
     public Player determineTurnOrder() throws EmptyCollectionException {
         Random random = new Random();
@@ -76,59 +110,44 @@ public class Game {
         }
     }
 
-    public void randPlayerChoice() {
-        Random rand = new Random();
-        int choice = rand.nextInt(2);
-        if (choice == 0) {
-            System.out.println("Player 1 starts!");
-        } else {
-            System.out.println("Player 2 starts!");
-        }
-    }
 
-    public int playRound(Player player) throws EmptyCollectionException, NonComparableElementException {
-        int p1, p2;
+    public void playRound(Player player, int o) throws EmptyCollectionException, NonComparableElementException {
+        int p3, p4;
 
         if (player.getName().equals(player1.getName())) {
-            p1 = player1.moveBot(player1);
-            if (p1 == 1) {
-                return 1;
+
+            p3 = player1.moveBot(player1, player2,o);
+            if (p3 == 1) {
+                setGameStatus(true);
+                setWinner(player1);
+                return;
             }
 
-            p2 = player2.moveBot(player2);
-            if (p2 == 1)
-                return 2;
+            p4 = player2.moveBot(player2,player1, o);
+            if (p4 == 1) {
+                setGameStatus(true);
+                setWinner(player2);
+                return;
+            }
+
         } else {
-            p2 = player2.moveBot(player2);
-            if (p2 == 1)
-                return 2;
-            p1 = player1.moveBot(player1);
-            if (p1 == 1)
-                return 1;
+
+            p4 = player2.moveBot(player2,player1, o);
+            if (p4 == 1) {
+                setGameStatus(true);
+                setWinner(player2);
+                return;
+            }
+
+            p3 = player1.moveBot(player1,player2, o);
+            if (p3 == 1) {
+                setGameStatus(true);
+                setWinner(player1);
+                return;
+            }
+
         }
 
-        return 0;
     }
 
-    public void playRoundToBase(int ordem) throws EmptyCollectionException, NonComparableElementException {
-        int p1, p2;
-
-        switch (ordem) {
-            case 1:
-                p2 = player2.moveBotToBase(player2);
-                if (p2 == 1)
-                    setGameStatus(true);
-                p1 = player1.moveBotToBase(player1);
-                if (p1 == 1)
-                    setGameStatus(true);
-            case 2:
-                p1 = player1.moveBotToBase(player1);
-                if (p1 == 1) {
-                    setGameStatus(true);
-                }
-                p2 = player2.moveBotToBase(player2);
-                if (p2 == 1)
-                    setGameStatus(true);
-        }
-    }
 }

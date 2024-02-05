@@ -15,8 +15,6 @@ public class Player {
     private int numBots;
     private int botIndex;
     private Flag flag;
-
-
     private ArrayOrderedList<Bot> bots;
 
     public Player(String name) {
@@ -73,37 +71,70 @@ public class Player {
     //diferent
 
 
-    public int moveBot(Player player) throws EmptyCollectionException, NonComparableElementException {
-        Bot currentBot = bots.get(botIndex);
-
-        System.out.println(player.getName());
+    public int moveBot(Player player1, Player player2, int o) throws EmptyCollectionException {
+       // int p1 = 0;
         for (int i = 0; i < numBots; i++) {
-            currentBot.move();
+            Bot currentBot = bots.get(i);
+
+            System.out.println("\n" + player1.getName());
+            if (!currentBot.hasFlag()) {
+                bots.get(i).move();
+            }else
+            {
+                //currentBot.move();
+                // } else {
+                flag.capture(player1);
+                System.out.println("\nBASE");
+                if (o == 1) {
+                    return moveBotToBase(player1);
+                } else {
+                    return moveBotToBaseUnidirecional(player1);
+                }
+
+            }
+
+           // botIndex = (botIndex + 1) % bots.size(); // Alterna entre os bots
+
         }
-        botIndex = (botIndex + 1) % bots.size(); // Alterna entre os bots
 
-        if (currentBot.hasFlag()) {
-            flag.capture(player);
+        return 0;
+    }
 
-            return 1;
+    public int moveBotToBase(Player player1) throws EmptyCollectionException {
+        for (int i = 0; i < numBots; i++) {
+            Bot currentBot = bots.get(botIndex);
+
+            System.out.println(player1.getName());
+
+            currentBot.moveToBase(player1);
+
+            botIndex = (botIndex + 1) % bots.size(); // Alterna entre os bots
+
+            if (currentBot.isBlocked()) {
+                flag.capturetoBase(player1);
+                return 1;
+            }
         }
         return 0;
     }
 
-    public int moveBotToBase(Player player) throws EmptyCollectionException, NonComparableElementException {
-        Bot currentBot = bots.get(botIndex);
 
-        System.out.println(player.getName());
+    public int moveBotToBaseUnidirecional(Player player1) throws EmptyCollectionException {
         for (int i = 0; i < numBots; i++) {
-            currentBot.moveToBase();
-        }
-        botIndex = (botIndex + 1) % bots.size(); // Alterna entre os bots
+            Bot currentBot = bots.get(botIndex);
 
-        if (currentBot.hasFlag()) {
-            flag.capture(player);
+            System.out.println(player1.getName());
 
-            return 1;
+            currentBot.moveUniToBase(player1);
+
+            botIndex = (botIndex + 1) % bots.size(); // Alterna entre os bots
+
+            if (currentBot.isBlocked()) {
+                flag.capturetoBase(player1);
+                return 1;
+            }
         }
         return 0;
     }
+
 }

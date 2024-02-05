@@ -1,29 +1,27 @@
 package org.example;
 
-import Estruturas.Lists.ArrayOrderedList;
 import Estruturas.Lists.ArrayUnorderedList;
-import Estruturas.Queues.LinkedQueue;
-import Exceptions.ElementNotFoundException;
 import Exceptions.EmptyCollectionException;
-import Exceptions.NonComparableElementException;
 
 import java.util.UUID;
 
 public class Bot implements Comparable {
     private UUID id;
     private ArrayUnorderedList<Integer> positions;
+    private ArrayUnorderedList<Integer> positionsBase;
     private int position;
     private int destination;
     private Algoritmo algoritmo;
     private boolean blocked = false;
-    private boolean flag = false;
+    private boolean flag;
 
 
-    public Bot(int position, int destination, Algoritmo algoritmo) {
+    public Bot(int position, int destination, Algoritmo algoritmo, boolean flag) {
         this.id = UUID.randomUUID();
         this.position = position;
         this.destination = destination;
         this.algoritmo = algoritmo;
+        this.flag = flag;
     }
 
     public int getPosition() {
@@ -50,8 +48,20 @@ public class Bot implements Comparable {
         this.positions = positions;
     }
 
+    public ArrayUnorderedList<Integer> getPositionsBase() {
+        return positionsBase;
+    }
+
+    public void setPositionsBase(ArrayUnorderedList<Integer> positionsBase) {
+        this.positionsBase = positionsBase;
+    }
+
     public boolean isBlocked() {
         return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
     }
 
     public boolean hasFlag() {
@@ -63,42 +73,71 @@ public class Bot implements Comparable {
     }
 
 
-    public void move() throws EmptyCollectionException {
+    public int move() throws EmptyCollectionException {
         if (!positions.isEmpty()) {
             int nextPosition = positions.removeFirst();
             position = nextPosition;
 
             positions.addToRear(position);
-            System.out.println(id);
-            System.out.println(positions.toString());
-            System.out.println(position);
+
+            System.out.println("ID BOT: " + id);
+            System.out.println("POSIÇÕES - " + positions.toString());
+            System.out.println("Posição atual " + position);
 
             if (position == destination) {
+                //setBlocked(true);
                 setFlag(true);
+                flag=true;
+                return 1;
             }
-
         }
+        return 0;
     }
 
-    public void moveToBase() throws EmptyCollectionException {
+    public void moveToBase(Player player) throws EmptyCollectionException {
         if (!positions.isEmpty()) {
+            if (positions.last() == destination) {
+                positions.addToFront(positions.removeLast());
+            }
+
             int nextPosition = positions.removeLast();
             position = nextPosition;
 
             positions.addToFront(position);
+            positions.last();
 
-            System.out.println("ID BOT: " + id);
-            System.out.println("POSIÇÕES\n");
-            System.out.println(positions.toString());
-            System.out.println("Posição atual" + position);
+            System.out.println("\nID BOT: " + id);
+            System.out.println("POSIÇÕES - " + positions.toString());
+            System.out.println("Posição atual " + position);
 
-            if (position == destination) {
-                setFlag(true);
+            if (position == player.getPositionFlag()) {
+                setBlocked(true);
             }
 
         }
     }
 
+
+    public void moveUniToBase(Player player) throws EmptyCollectionException {
+        if (!positionsBase.isEmpty()) {
+            if (positions.last() == destination) {
+                positionsBase.addToRear(positionsBase.removeFirst());
+            }
+
+            int nextPosition = positionsBase.removeFirst();
+            position = nextPosition;
+
+            positionsBase.addToRear(position);
+
+            System.out.println("ID BOT: " + id);
+            System.out.println("POSIÇÕES - " + positionsBase.toString());
+            System.out.println("Posição atual " + position);
+
+            if (position == player.getPositionFlag()) {
+                setBlocked(true);
+            }
+        }
+    }
 
     @Override
     public int compareTo(Object o) {

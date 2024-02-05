@@ -1,6 +1,7 @@
 package org.example;
 
 import Estruturas.Graphs.Network;
+import Estruturas.Lists.ArrayOrderedList;
 import Estruturas.Lists.ArrayUnorderedList;
 import Estruturas.Queues.LinkedQueue;
 import Exceptions.EmptyCollectionException;
@@ -14,10 +15,19 @@ import java.util.Random;
 public class Mapa extends Network<Integer> {
 
     protected static final int MAX_DISTANCE = 15;
+    private ArrayOrderedList<Boolean> locationsOccupied;
 
     public Mapa() {
         super();
 
+    }
+
+    public ArrayOrderedList<Boolean> getLocationsOccupied() {
+        return locationsOccupied;
+    }
+
+    public void setLocationsOccupied(ArrayOrderedList<Boolean> locationsOccupied) {
+        this.locationsOccupied = locationsOccupied;
     }
 
     public void createMap(int numeroLocal, int density) {

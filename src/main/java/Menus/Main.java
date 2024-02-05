@@ -33,14 +33,13 @@ public class Main {
 
             int ordem = 0;
             while (player.getFlag().getStatus() != FlagStatus.CAPTURED) {
-                ordem = game.playRound(player);
+                //ordem = game.playRound(player);
+            }
+            System.out.println("------ PARA A BASE -------\n");
+            while (!game.getGameStatus()){
+              //  game.playRoundToBase(ordem);
             }
 
-          /* while (!game.getGameStatus()){
-               game.playRoundToBase(ordem);
-           }*/
-
-            //game.playGame();
         } catch (NonComparableElementException | EmptyCollectionException e) {
             throw new RuntimeException(e);
         }
