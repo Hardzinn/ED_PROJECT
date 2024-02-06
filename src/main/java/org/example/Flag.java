@@ -6,6 +6,7 @@ public class Flag {
     private UUID flagId;
     private FlagStatus status;
     private Integer positionFlag;
+    private Integer positionBase;
     public Flag(int positionFlag) {
         this.flagId = UUID.randomUUID();
         this.positionFlag = positionFlag;
@@ -14,6 +15,15 @@ public class Flag {
 
     public int getId() {
         return flagId.hashCode();
+    }
+
+
+    public void setPositionBase(int positionBase) {
+        this.positionBase = positionBase;
+    }
+
+    public int getPositionBase() {
+        return positionBase;
     }
 
     public void capture(Player player){

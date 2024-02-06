@@ -24,6 +24,11 @@ public class Bot implements Comparable {
         this.flag = flag;
     }
 
+
+    public UUID getId() {
+        return id;
+    }
+
     public int getPosition() {
         return position;
     }
@@ -85,9 +90,7 @@ public class Bot implements Comparable {
             System.out.println("Posição atual " + position);
 
             if (position == destination) {
-                //setBlocked(true);
                 setFlag(true);
-                flag=true;
                 return 1;
             }
         }

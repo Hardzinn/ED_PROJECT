@@ -123,9 +123,7 @@ public class Teste {
             }
 
 
-        } catch (NonComparableElementException e) {
-            throw new RuntimeException(e);
-        } catch (EmptyCollectionException e) {
+        } catch (NonComparableElementException | EmptyCollectionException e) {
             throw new RuntimeException(e);
         }
 

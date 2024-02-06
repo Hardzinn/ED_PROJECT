@@ -116,7 +116,7 @@ public class Game {
 
         if (player.getName().equals(player1.getName())) {
 
-            p3 = player1.moveBot(player1, player2,o);
+            p3 = player1.moveBot(player1, player2, o);
             if (p3 == 1) {
                 setGameStatus(true);
                 setWinner(player1);

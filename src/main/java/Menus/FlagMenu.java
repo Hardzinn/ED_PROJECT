@@ -48,12 +48,12 @@ public class FlagMenu {
         do {
 
             option = scanner.nextInt();
-            if (option <= 0 || option > mapa.getNumVertices()) {
+            if (option < 0 || option > (mapa.getNumVertices() - 1)) {
                 System.out.println("Invalid position");
             }
-        } while (option <= 0 || option > mapa.getNumVertices());
+        } while (option < 0 || option > (mapa.getNumVertices() - 1));
 
         player.setFlag(new Flag(option));
-
+        player.getFlag().setPositionBase(option);
     }
 }

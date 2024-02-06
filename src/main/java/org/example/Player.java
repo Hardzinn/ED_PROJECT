@@ -1,13 +1,9 @@
 package org.example;
 
 import Estruturas.Lists.ArrayOrderedList;
-import Estruturas.Lists.ArrayUnorderedList;
-import Exceptions.NonComparableElementException;
 import Exceptions.EmptyCollectionException;
 
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class Player {
     private String name;
@@ -68,11 +64,47 @@ public class Player {
     }
 
 
-    //diferent
+    protected void checkBotHaveFlagIsInSamePos(Player player1, Player player2) {
+        if (player1.getBots() == null || player2.getBots() == null) {
+            throw new IllegalArgumentException("Bots list cannot be null");
+        }
+
+        for (int i = 0; i < player1.getNumBots(); i++) {
+            for (int j = 0; j < player2.getNumBots(); j++) {
+                Bot bot1 = player1.getBots().get(i);
+                Bot bot2 = player2.getBots().get(j);
+
+                if (bot1.getPosition() == bot2.getPosition() && bot1.hasFlag() && bot2.hasFlag()) {
+                    System.out.println("Bots with flags cant have the same position. \n");
+                    System.out.println("Flag returned to base. \n");
+                    System.out.println(bot1.getId() + " and " + bot2.getId() + " are in the same position");
+                    bot1.setFlag(false);
+                    bot2.setFlag(false);
+
+                    if (player1.getFlag() != null) {
+                        player1.getFlag().setPositionFlag(player1.getFlag().getPositionBase());
+                    }
+
+                    if (player2.getFlag() != null) {
+                        player2.getFlag().setPositionFlag(player2.getFlag().getPositionBase());
+                    }
+                }
+            }
+        }
+    }
+
+    protected void checkFlagReturnToBase(Player player1, Player player2, int location) {
+        for (int i = 0; i < player2.getNumBots(); i++) {
+            Bot bot = player2.getBots().get(i);
+            if (bot.getPosition() == location && bot.hasFlag()) {
+                System.out.println("Bot " + bot.getId() + " from " + player2.getName() + " has returned the flag to base.");
+                player1.getFlag().setPositionFlag(player1.getFlag().getPositionBase());
+            }
+        }
+    }
 
 
     public int moveBot(Player player1, Player player2, int o) throws EmptyCollectionException {
-       // int p1 = 0;
         for (int i = 0; i < numBots; i++) {
             Bot currentBot = bots.get(i);
 
@@ -81,26 +113,21 @@ public class Player {
                 bots.get(i).move();
             }else
             {
-                //currentBot.move();
-                // } else {
                 flag.capture(player1);
                 System.out.println("\nBASE");
-                if (o == 1) {
-                    return moveBotToBase(player1);
+                if (o == 2) {
+                    return moveBotToBase(player1, player2);
                 } else {
-                    return moveBotToBaseUnidirecional(player1);
+                    return moveBotToBaseUnidirecional(player1, player2);
                 }
 
             }
 
-           // botIndex = (botIndex + 1) % bots.size(); // Alterna entre os bots
-
         }
-
         return 0;
     }
 
-    public int moveBotToBase(Player player1) throws EmptyCollectionException {
+    public int moveBotToBase(Player player1, Player player2) throws EmptyCollectionException {
         for (int i = 0; i < numBots; i++) {
             Bot currentBot = bots.get(botIndex);
 
@@ -108,7 +135,13 @@ public class Player {
 
             currentBot.moveToBase(player1);
 
-            botIndex = (botIndex + 1) % bots.size(); // Alterna entre os bots
+            botIndex = (botIndex + 1) % bots.size();
+
+            checkFlagReturnToBase(player1, player2, currentBot.getPosition());
+
+            if(currentBot.hasFlag()){
+                checkBotHaveFlagIsInSamePos(player1, player2);
+            }
 
             if (currentBot.isBlocked()) {
                 flag.capturetoBase(player1);
@@ -119,7 +152,7 @@ public class Player {
     }
 
 
-    public int moveBotToBaseUnidirecional(Player player1) throws EmptyCollectionException {
+    public int moveBotToBaseUnidirecional(Player player1,  Player player2) throws EmptyCollectionException {
         for (int i = 0; i < numBots; i++) {
             Bot currentBot = bots.get(botIndex);
 
@@ -127,7 +160,13 @@ public class Player {
 
             currentBot.moveUniToBase(player1);
 
-            botIndex = (botIndex + 1) % bots.size(); // Alterna entre os bots
+            botIndex = (botIndex + 1) % bots.size();
+
+            checkFlagReturnToBase(player1, player2, currentBot.getPosition());
+
+            if(currentBot.hasFlag()){
+                checkBotHaveFlagIsInSamePos(player1, player2);
+            }
 
             if (currentBot.isBlocked()) {
                 flag.capturetoBase(player1);

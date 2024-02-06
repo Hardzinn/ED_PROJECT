@@ -65,7 +65,7 @@ public class BotMenu {
         int option;
         ArrayOrderedList<Bot> bots = new ArrayOrderedList<Bot>();
         Scanner scanner = new Scanner(System.in);
-
+        Bot bot;
         Algoritmo algoritmo = new Algoritmo(player);
 
 
@@ -81,7 +81,7 @@ public class BotMenu {
 
                 switch (option) {
                     case 1:
-                        Bot bot = new Bot(start, end, algoritmo, false);
+                        bot = new Bot(start, end, algoritmo, false);
                         algoritmo.BFS(game.getMapa(), start);
                         bot.setPositions(algoritmo.getPositions());
                         algoritmo.BFS(game.getMapa(), end);
@@ -90,21 +90,21 @@ public class BotMenu {
                         break;
 
                     case 2:
-                        Bot bot1 = new Bot(start, end, algoritmo,false);
+                        bot = new Bot(start, end, algoritmo,false);
                         algoritmo.shortestPath(game.getMapa(), start, end);
-                        bot1.setPositions(algoritmo.getPositions());
+                        bot.setPositions(algoritmo.getPositions());
                         algoritmo.shortestPath(game.getMapa(), end, start);
-                        bot1.setPositionsBase(algoritmo.getPositions());
-                        bots.add(bot1);
+                        bot.setPositionsBase(algoritmo.getPositions());
+                        bots.add(bot);
                         break;
 
                     case 3:
-                        Bot bot2 = new Bot(start, end, algoritmo,false);
+                        bot = new Bot(start, end, algoritmo,false);
                         algoritmo.minimumTree(game.getMapa(), start);
-                        bot2.setPositions(algoritmo.getPositions());
+                        bot.setPositions(algoritmo.getPositions());
                         algoritmo.minimumTree(game.getMapa(), end);
-                        bot2.setPositionsBase(algoritmo.getPositions());
-                        bots.add(bot2);
+                        bot.setPositionsBase(algoritmo.getPositions());
+                        bots.add(bot);
                         break;
 
                     default:
@@ -124,7 +124,7 @@ public class BotMenu {
         int option;
         ArrayOrderedList<Bot> bots = new ArrayOrderedList<Bot>();
         Scanner scanner = new Scanner(System.in);
-
+        Bot bot;
         Algoritmo algoritmo = new Algoritmo(player);
 
 
@@ -140,24 +140,24 @@ public class BotMenu {
 
                 switch (option) {
                     case 1:
-                        Bot bot = new Bot(start, end, algoritmo,false);
+                        bot = new Bot(start, end, algoritmo,false);
                         algoritmo.BFS(game.getMapa(), start);
                         bot.setPositions(algoritmo.getPositions());
                         bots.add(bot);
                         break;
 
                     case 2:
-                        Bot bot1 = new Bot(start, end, algoritmo,false);
+                        bot = new Bot(start, end, algoritmo,false);
                         algoritmo.shortestPath(game.getMapa(), start, end);
-                        bot1.setPositions(algoritmo.getPositions());
-                        bots.add(bot1);
+                        bot.setPositions(algoritmo.getPositions());
+                        bots.add(bot);
                         break;
 
                     case 3:
-                        Bot bot2 = new Bot(start, end, algoritmo,false);
+                        bot = new Bot(start, end, algoritmo,false);
                         algoritmo.minimumTree(game.getMapa(), start);
-                        bot2.setPositions(algoritmo.getPositions());
-                        bots.add(bot2);
+                        bot.setPositions(algoritmo.getPositions());
+                        bots.add(bot);
                         break;
 
                     default:
