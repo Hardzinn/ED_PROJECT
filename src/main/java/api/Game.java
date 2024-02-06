@@ -12,8 +12,6 @@ public class Game implements IGame {
     private Mapa mapa;
     private Player player1;
     private Player player2;
-    private int mapaType;
-    private Flag flag;
     private boolean gameOver;
 
     public Game(Mapa mapa) {
@@ -44,14 +42,6 @@ public class Game implements IGame {
         this.player2 = player2;
     }
 
-    public Flag getFlag() {
-        return flag;
-    }
-
-    public void setFlag(Flag flag) {
-        this.flag = flag;
-    }
-
     public boolean getGameStatus() {
         return gameOver;
     }
@@ -62,14 +52,6 @@ public class Game implements IGame {
 
     public void setWinner(Player player) {
         System.out.println("The winner is " + player.getName());
-    }
-
-    public void setMapaType(int mapaType) {
-        this.mapaType = mapaType;
-    }
-
-    public int getMapaType() {
-        return this.mapaType;
     }
 
     public Player determineTurnOrder() throws EmptyCollectionException {
@@ -87,19 +69,19 @@ public class Game implements IGame {
     }
 
 
-    public void playRound(Player player, int o) throws EmptyCollectionException, NonComparableElementException {
+    public void playRound(Player player) throws EmptyCollectionException, NonComparableElementException {
         int p3, p4;
 
         if (player.getName().equals(player1.getName())) {
 
-            p3 = player1.moveBot(player1, player2, o);
+            p3 = player1.moveBot(player1, player2, getMapa().getType());
             if (p3 == 1) {
                 setGameStatus(true);
                 setWinner(player1);
                 return;
             }
 
-            p4 = player2.moveBot(player2,player1, o);
+            p4 = player2.moveBot(player2,player1, getMapa().getType());
             if (p4 == 1) {
                 setGameStatus(true);
                 setWinner(player2);
@@ -108,14 +90,14 @@ public class Game implements IGame {
 
         } else {
 
-            p4 = player2.moveBot(player2,player1, o);
+            p4 = player2.moveBot(player2,player1, getMapa().getType());
             if (p4 == 1) {
                 setGameStatus(true);
                 setWinner(player2);
                 return;
             }
 
-            p3 = player1.moveBot(player1,player2, o);
+            p3 = player1.moveBot(player1,player2, getMapa().getType());
             if (p3 == 1) {
                 setGameStatus(true);
                 setWinner(player1);

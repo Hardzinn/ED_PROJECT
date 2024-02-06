@@ -14,19 +14,13 @@ import java.util.Random;
 public class Mapa extends Network<Integer> implements IMapa {
 
     protected static final int MAX_DISTANCE = 15;
-    private ArrayOrderedList<Boolean> locationsOccupied;
     private MapaType type;
 
     public Mapa() {
         super();
     }
-    public ArrayOrderedList<Boolean> getLocationsOccupied() {
-        return locationsOccupied;
-    }
 
-    public void setLocationsOccupied(ArrayOrderedList<Boolean> locationsOccupied) {
-        this.locationsOccupied = locationsOccupied;
-    }
+
 
     public MapaType getType() {
         return type;
@@ -35,6 +29,7 @@ public class Mapa extends Network<Integer> implements IMapa {
     public void setType(MapaType type) {
         this.type = type;
     }
+
 
     public void createMap(int numeroLocal, int density, MapaType type) {
         this.addLocal(numeroLocal);
@@ -154,8 +149,11 @@ public class Mapa extends Network<Integer> implements IMapa {
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));
             int numVertices = Integer.parseInt(br.readLine());
-            MapaType type = MapaType.valueOf(br.readLine());
+            String typeString = br.readLine();
+            String typeName = typeString.replaceAll("\\s+", "_").toUpperCase();
+            setType(MapaType.valueOf(typeName));
             Mapa mapa = new Mapa();
+            mapa.setType(MapaType.valueOf(typeName));
             for (int i = 0; i < numVertices; i++) {
                 mapa.addVertex(i);
             }
@@ -248,7 +246,5 @@ public class Mapa extends Network<Integer> implements IMapa {
 
         return result;
     }
-
-
 
 }

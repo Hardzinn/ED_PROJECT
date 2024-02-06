@@ -104,7 +104,7 @@ public class Player implements IPlayer {
     }
 
 
-    public int moveBot(Player player1, Player player2, int o) throws EmptyCollectionException {
+    public int moveBot(Player player1, Player player2, MapaType type) throws EmptyCollectionException {
         for (int i = 0; i < numBots; i++) {
             Bot currentBot = bots.get(i);
 
@@ -115,7 +115,7 @@ public class Player implements IPlayer {
             {
                 flag.capture(player1);
                 System.out.println("\nBASE");
-                if (o == 1) {
+                if (type == MapaType.MAPA_UNIDIRECIONAL) {
                     return moveBotToBaseUnidirecional(player1, player2);
                 } else {
                     return moveBotToBase(player1, player2);

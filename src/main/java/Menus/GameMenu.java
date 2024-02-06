@@ -64,7 +64,6 @@ public class GameMenu {
                     }
 
                     game = new Game(mapa);
-                    game.setMapaType(mapType);
                     game.setMapa(mapa);
                     break;
                 case 2:
@@ -94,7 +93,7 @@ public class GameMenu {
 
 
                     new FlagMenu(game).flagMenu();
-                    game.getMapaType();
+                    game.getMapa().getType();
 
                     try {
                         new BotMenu(game).menuGeral(game.getPlayer1().getName());
@@ -103,7 +102,7 @@ public class GameMenu {
                         Player player = game.determineTurnOrder();
 
                         while (!game.getGameStatus()) {
-                            game.playRound(player, game.getMapaType());
+                            game.playRound(player);
                         }
 
 
