@@ -67,7 +67,7 @@ public class BotMenu {
         ArrayOrderedList<Bot> bots = new ArrayOrderedList<Bot>();
         Scanner scanner = new Scanner(System.in);
         Bot bot;
-        Algoritmo algoritmo = new Algoritmo(player);
+        Algoritmo algoritmo = new Algoritmo();
 
 
         for (int i = 0; i < numBots; i++) {
@@ -126,7 +126,7 @@ public class BotMenu {
         ArrayOrderedList<Bot> bots = new ArrayOrderedList<Bot>();
         Scanner scanner = new Scanner(System.in);
         Bot bot;
-        Algoritmo algoritmo = new Algoritmo(player);
+        Algoritmo algoritmo = new Algoritmo();
 
 
         for (int i = 0; i < numBots; i++) {
