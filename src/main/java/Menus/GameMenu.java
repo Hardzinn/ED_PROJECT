@@ -2,10 +2,7 @@ package Menus;
 
 import Exceptions.EmptyCollectionException;
 import Exceptions.NonComparableElementException;
-import api.Game;
-import api.Mapa;
-import api.MapaUniDirectional;
-import api.Player;
+import api.*;
 
 import java.util.Scanner;
 
@@ -51,14 +48,14 @@ public class GameMenu {
                     switch (mapType) {
                         case 1:
                             MapaUniDirectional mapaUniDirectional = new MapaUniDirectional();
-                            mapaUniDirectional.createMap(numLoc, density);
+                            mapaUniDirectional.createMap(numLoc, density, MapaType.MAPA_UNIDIRECIONAL);
                             System.out.println(mapaUniDirectional.toString());
                             mapa = mapaUniDirectional;
 
                             break;
                         case 2:
                             mapa = new Mapa();
-                            mapa.createMap(numLoc, density);
+                            mapa.createMap(numLoc, density, MapaType.MAPA_BIDIRECIONAL);
                             System.out.println(mapa.toString());
                             break;
                         default:

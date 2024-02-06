@@ -8,6 +8,7 @@ public class MapaUniDirectional extends Mapa implements IMapaUniDirectional {
 
     public MapaUniDirectional() {
         super();
+
     }
 
     @Override

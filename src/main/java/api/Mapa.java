@@ -15,12 +15,11 @@ public class Mapa extends Network<Integer> implements IMapa {
 
     protected static final int MAX_DISTANCE = 15;
     private ArrayOrderedList<Boolean> locationsOccupied;
+    private MapaType type;
 
     public Mapa() {
         super();
-
     }
-
     public ArrayOrderedList<Boolean> getLocationsOccupied() {
         return locationsOccupied;
     }
@@ -29,9 +28,18 @@ public class Mapa extends Network<Integer> implements IMapa {
         this.locationsOccupied = locationsOccupied;
     }
 
-    public void createMap(int numeroLocal, int density) {
+    public MapaType getType() {
+        return type;
+    }
+
+    public void setType(MapaType type) {
+        this.type = type;
+    }
+
+    public void createMap(int numeroLocal, int density, MapaType type) {
         this.addLocal(numeroLocal);
         this.addConnection(numeroLocal, density);
+        this.type = type;
     }
 
     public void addLocal(int numeroLocal) {
@@ -97,7 +105,7 @@ public class Mapa extends Network<Integer> implements IMapa {
         return numVertices;
     }
 
-
+    /*
     public void exportMap(Mapa mapa,String filename) {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename));
@@ -121,7 +129,51 @@ public class Mapa extends Network<Integer> implements IMapa {
         }
         return null;
     }
+    */
 
+
+    public void exportMap(Mapa mapa, String filename) {
+        try {
+            FileWriter fileWriter = new FileWriter(filename);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+            printWriter.println(mapa.getNumVertices());
+            printWriter.println(mapa.getType());
+            double[][] adjMatrix = mapa.getAdjMatrix();
+            for (int i = 0; i < mapa.getNumVertices(); i++) {
+                for (int j = 0; j < mapa.getNumVertices(); j++) {
+                    printWriter.print(adjMatrix[i][j] + " ");
+                }
+                printWriter.println();
+            }
+            printWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public Mapa importMap(String filename) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            int numVertices = Integer.parseInt(br.readLine());
+            MapaType type = MapaType.valueOf(br.readLine());
+            Mapa mapa = new Mapa();
+            for (int i = 0; i < numVertices; i++) {
+                mapa.addVertex(i);
+            }
+            for (int i = 0; i < numVertices; i++) {
+                String[] line = br.readLine().split(" ");
+                for (int j = 0; j < numVertices; j++) {
+                    double weight = Double.parseDouble(line[j]);
+                    if (weight != Double.POSITIVE_INFINITY) {
+                        mapa.addEdge(i, j, weight);
+                    }
+                }
+            }
+            return mapa;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public Iterator<Integer> iteratorMST(Mapa mapa, Integer startVertex) {
         LinkedQueue<Integer> queue = new LinkedQueue<>();
         ArrayUnorderedList<Integer> resultList = new ArrayUnorderedList<>();

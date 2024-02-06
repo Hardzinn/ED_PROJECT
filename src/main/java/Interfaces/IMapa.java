@@ -1,12 +1,13 @@
 package Interfaces;
 
 import api.Mapa;
+import api.MapaType;
 
 import java.util.Iterator;
 
 public interface IMapa {
 
-    public void createMap(int numeroLocal, int density);
+    public void createMap(int numeroLocal, int density, MapaType type);
     public void addLocal(int numeroLocal);
     public void addConnection(int numVertices, int density);
     public double[] getCoords(int vertice);

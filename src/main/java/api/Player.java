@@ -115,10 +115,10 @@ public class Player implements IPlayer {
             {
                 flag.capture(player1);
                 System.out.println("\nBASE");
-                if (o == 2) {
-                    return moveBotToBase(player1, player2);
-                } else {
+                if (o == 1) {
                     return moveBotToBaseUnidirecional(player1, player2);
+                } else {
+                    return moveBotToBase(player1, player2);
                 }
 
             }
