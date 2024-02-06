@@ -123,7 +123,7 @@ public class Bot implements Comparable {
 
     public void moveUniToBase(Player player) throws EmptyCollectionException {
         if (!positionsBase.isEmpty()) {
-            if (positions.last() == destination) {
+            if (positionsBase.first() == destination) {
                 positionsBase.addToRear(positionsBase.removeFirst());
             }
 

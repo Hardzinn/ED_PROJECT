@@ -1,18 +1,41 @@
 package Menus;
 
+import Exceptions.EmptyCollectionException;
+import Exceptions.NonComparableElementException;
 import org.example.Game;
 import org.example.Mapa;
 import org.example.MapaUniDirectional;
+import org.example.Player;
 
 import java.util.Scanner;
 
 public class GameMenu {
 
+    private Mapa mapa;
+    private Game game;
+
     Scanner scanner = new Scanner(System.in);
     int choice;
 
+    public Mapa getMapa() {
+        return mapa;
+    }
 
-    public void gameMenu(Mapa mapa, Game game){
+    public void setMapa(Mapa mapa) {
+        this.mapa = mapa;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public void gameMenu() {
+
+        int mapType;
 
         do {
             System.out.println("\nGame Menu:");
@@ -38,7 +61,7 @@ public class GameMenu {
                     System.out.print("Enter the density: ");
                     int density = scanner.nextInt();
                     System.out.print("Choose map type (1 for Unidirectional, 2 for Bidirectional): ");
-                    int mapType = scanner.nextInt();
+                    mapType = scanner.nextInt();
                     System.out.println("New game started with " + numLoc + " locations and density " + density + "%.");
                     switch (mapType) {
                         case 1:
@@ -59,8 +82,8 @@ public class GameMenu {
                     }
 
                     game = new Game(mapa);
+                    game.setMapaType(mapType);
                     game.setMapa(mapa);
-
                     break;
                 case 2:
                     System.out.println("Loading map...");
@@ -78,13 +101,32 @@ public class GameMenu {
                     // Save map
                     if (mapa != null) {
                         System.out.println("Saving map...");
-                        mapa.exportMap(mapa,"map.csv");
+                        mapa.exportMap(mapa, "map.csv");
                     } else {
                         System.out.println("No map to save.");
                     }
                     break;
                 case 4:
                     System.out.println("Starting the game.Be Prepared...");
+
+
+                    new FlagMenu(game).flagMenu();
+                    game.getMapaType();
+
+                    try {
+                        new BotMenu(game).menuGeral(game.getPlayer1().getName());
+                        new BotMenu(game).menuGeral(game.getPlayer2().getName());
+
+                        Player player = game.determineTurnOrder();
+
+                        while (!game.getGameStatus()) {
+                            game.playRound(player, game.getMapaType());
+                        }
+
+
+                    } catch (NonComparableElementException | EmptyCollectionException e) {
+                        throw new RuntimeException(e);
+                    }
                     break;
                 case 5:
                     System.out.println("Exiting game...");
@@ -93,11 +135,9 @@ public class GameMenu {
                     System.out.println("Invalid choice. Please enter a number between 1 and 4.");
             }
 
-            game = new Game(mapa);
-            game.setMapa(mapa);
-
         } while (choice != 5);
 
+        scanner.close();
     }
 
 
