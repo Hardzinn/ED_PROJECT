@@ -2,10 +2,11 @@ package api;
 
 import Estruturas.Lists.ArrayUnorderedList;
 import Exceptions.VertexNotFoundException;
+import Interfaces.IAlgoritmo;
 
 import java.util.Iterator;
 
-public class Algoritmo {
+public class Algoritmo implements IAlgoritmo {
 
     private ArrayUnorderedList<Integer> positions;
 

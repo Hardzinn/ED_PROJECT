@@ -1,8 +1,10 @@
 package api;
 
+import Interfaces.IMapaUniDirectional;
+
 import java.util.Random;
 
-public class MapaUniDirectional extends Mapa{
+public class MapaUniDirectional extends Mapa implements IMapaUniDirectional {
 
     public MapaUniDirectional() {
         super();

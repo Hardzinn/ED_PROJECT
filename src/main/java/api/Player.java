@@ -2,10 +2,10 @@ package api;
 
 import Estruturas.Lists.ArrayOrderedList;
 import Exceptions.EmptyCollectionException;
+import Interfaces.IPlayer;
 
 
-
-public class Player {
+public class Player implements IPlayer {
     private String name;
     private int numPlayer;
     private int numBots;
@@ -64,7 +64,7 @@ public class Player {
     }
 
 
-    protected void checkBotHaveFlagIsInSamePos(Player player1, Player player2) {
+    public void checkBotHaveFlagIsInSamePos(Player player1, Player player2) {
         if (player1.getBots() == null || player2.getBots() == null) {
             throw new IllegalArgumentException("Bots list cannot be null");
         }
@@ -93,7 +93,7 @@ public class Player {
         }
     }
 
-    protected void checkFlagReturnToBase(Player player1, Player player2, int location) {
+    public void checkFlagReturnToBase(Player player1, Player player2, int location) {
         for (int i = 0; i < player2.getNumBots(); i++) {
             Bot bot = player2.getBots().get(i);
             if (bot.getPosition() == location && bot.hasFlag()) {

@@ -4,9 +4,10 @@ import java.util.Random;
 
 import Exceptions.EmptyCollectionException;
 import Exceptions.NonComparableElementException;
+import Interfaces.IGame;
 
 
-public class Game {
+public class Game implements IGame {
 
     private Mapa mapa;
     private Player player1;

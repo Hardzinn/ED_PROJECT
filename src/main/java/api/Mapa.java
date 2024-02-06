@@ -5,12 +5,13 @@ import Estruturas.Lists.ArrayOrderedList;
 import Estruturas.Lists.ArrayUnorderedList;
 import Estruturas.Queues.LinkedQueue;
 import Exceptions.EmptyCollectionException;
+import Interfaces.IMapa;
 
 import java.io.*;
 import java.util.Iterator;
 import java.util.Random;
 
-public class Mapa extends Network<Integer> {
+public class Mapa extends Network<Integer> implements IMapa {
 
     protected static final int MAX_DISTANCE = 15;
     private ArrayOrderedList<Boolean> locationsOccupied;
@@ -121,7 +122,7 @@ public class Mapa extends Network<Integer> {
         return null;
     }
 
-    protected Iterator<Integer> iteratorMST(Mapa mapa, Integer startVertex) {
+    public Iterator<Integer> iteratorMST(Mapa mapa, Integer startVertex) {
         LinkedQueue<Integer> queue = new LinkedQueue<>();
         ArrayUnorderedList<Integer> resultList = new ArrayUnorderedList<>();
         if (mapa.getNumVertices() == 0) {
