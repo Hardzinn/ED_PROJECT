@@ -1,4 +1,4 @@
-package org.example;
+package api;
 
 import Estruturas.Graphs.Network;
 import Estruturas.Lists.ArrayOrderedList;
@@ -7,9 +7,7 @@ import Estruturas.Queues.LinkedQueue;
 import Exceptions.EmptyCollectionException;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
 public class Mapa extends Network<Integer> {

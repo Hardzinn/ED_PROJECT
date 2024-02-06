@@ -1,4 +1,4 @@
-package org.example;
+package api;
 
 import Estruturas.Lists.ArrayOrderedList;
 import Exceptions.EmptyCollectionException;

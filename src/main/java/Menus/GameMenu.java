@@ -2,10 +2,10 @@ package Menus;
 
 import Exceptions.EmptyCollectionException;
 import Exceptions.NonComparableElementException;
-import org.example.Game;
-import org.example.Mapa;
-import org.example.MapaUniDirectional;
-import org.example.Player;
+import api.Game;
+import api.Mapa;
+import api.MapaUniDirectional;
+import api.Player;
 
 import java.util.Scanner;
 
@@ -17,21 +17,6 @@ public class GameMenu {
     Scanner scanner = new Scanner(System.in);
     int choice;
 
-    public Mapa getMapa() {
-        return mapa;
-    }
-
-    public void setMapa(Mapa mapa) {
-        this.mapa = mapa;
-    }
-
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
 
     public void gameMenu() {
 
@@ -88,11 +73,12 @@ public class GameMenu {
                 case 2:
                     System.out.println("Loading map...");
                     Mapa TempMapa = new Mapa();
-                    Mapa imported = TempMapa.importMap("mapa.txt");
-                    if (imported != null) {
+                    mapa = TempMapa.importMap("mapa.txt");
+                    if (mapa != null) {
                         System.out.println("Map loaded successfully.");
-                        System.out.println(imported.toString());
-                        game.setMapa(imported);
+                        System.out.println(mapa.toString());
+                        game = new Game(mapa);
+                        game.setMapa(mapa);
                     } else {
                         System.out.println("Failed to load map.");
                     }
@@ -101,7 +87,7 @@ public class GameMenu {
                     // Save map
                     if (mapa != null) {
                         System.out.println("Saving map...");
-                        mapa.exportMap(mapa, "map.csv");
+                        mapa.exportMap(mapa, "mapa.txt");
                     } else {
                         System.out.println("No map to save.");
                     }

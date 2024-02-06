@@ -1,4 +1,4 @@
-package org.example;
+package api;
 
 import Estruturas.Lists.ArrayUnorderedList;
 import Exceptions.VertexNotFoundException;

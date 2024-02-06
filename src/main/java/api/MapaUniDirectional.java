@@ -1,4 +1,4 @@
-package org.example;
+package api;
 
 import java.util.Random;
 

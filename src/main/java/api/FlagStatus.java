@@ -1,4 +1,4 @@
-package org.example;
+package api;
 
 public enum FlagStatus {
 

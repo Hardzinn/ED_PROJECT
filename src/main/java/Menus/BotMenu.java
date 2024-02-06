@@ -2,7 +2,10 @@ package Menus;
 
 import Estruturas.Lists.ArrayOrderedList;
 import Exceptions.NonComparableElementException;
-import org.example.*;
+import api.Algoritmo;
+import api.Bot;
+import api.Game;
+import api.Player;
 
 import java.util.Scanner;
 
@@ -34,8 +37,6 @@ public class BotMenu {
         } while (numBots == 0);
 
 
-        //game.getPlayer1().setBots(algorithmChoice(numBots, game.getPlayer1().getFlag().getPositionFlag(), game.getPlayer2().getFlag().getPositionFlag(),game.getPlayer1()));
-        //game.getPlayer2().setBots(algorithmChoice(numBots, game.getPlayer2().getFlag().getPositionFlag(), game.getPlayer1().getFlag().getPositionFlag(),game.getPlayer2()));
 
         if(game.getMapaType() == 1) {
             if (namePlayer.equals(game.getPlayer1().getName())) {
