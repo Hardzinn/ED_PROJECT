@@ -3,17 +3,35 @@ package Menus;
 import Estruturas.Lists.ArrayOrderedList;
 import Exceptions.NonComparableElementException;
 import api.*;
+import enums.MapaType;
 
 import java.util.Scanner;
 
+/**
+ * Classe que representa o menu dos bots. Esta classe e responsavel por criar o menu dos bots,
+ * permitindo ao jogador escolher o algoritmo que os bots vao utilizar.
+ */
 public class BotMenu {
 
+    /**
+     * Atributos da classe BotMenu
+     * game - jogo a ser utilizado
+     */
     private Game game;
 
+    /**
+     * Construtor da classe BotMenu
+     * @param game Jogo a ser utilizado
+     */
     public BotMenu(Game game) {
         this.game = game;
     }
 
+    /**
+     * Metodo que permite criar os bots. Para isso teremos que identificar primeiro qual o jogador que vai criar os bots.
+     * @param namePlayer Nome do jogador
+     * @throws NonComparableElementException Caso o elemento nao seja comparavel
+     */
     public void menuGeral(String namePlayer) throws NonComparableElementException {
         int numBots;
 
@@ -58,6 +76,17 @@ public class BotMenu {
         System.out.println("Bots created with success");
     }
 
+    /**
+     * Metodo que permite escolher o algoritmo que os bots vao utilizar.
+     * Para isso teremos que identificar primeiro qual o jogador que vai criar os bots.
+     * Menu utilizado para mapas unidirecionais
+     * @param numBots Numero de bots
+     * @param start Posicao inicial
+     * @param end Posicao final
+     * @param player Jogador
+     * @return bots
+     * @throws NonComparableElementException Caso o elemento nao seja comparavel
+     */
 
     public ArrayOrderedList<Bot> algorithmChoiceUni(int numBots, int start, int end, Player player) throws NonComparableElementException {
         int option;
@@ -118,6 +147,17 @@ public class BotMenu {
         return bots;
     }
 
+    /**
+     * Metodo que permite escolher o algoritmo que os bots vao utilizar.
+     * Para isso teremos que identificar primeiro qual o jogador que vai criar os bots.
+     * Menu utilizado para mapas bidirecionais
+     * @param numBots Numero de bots
+     * @param start Posicao inicial
+     * @param end Posicao final
+     * @param player Jogador
+     * @return bots
+     * @throws NonComparableElementException Caso o elemento nao seja comparavel
+     */
     public ArrayOrderedList<Bot> algorithmChoiceBid(int numBots, Integer start, Integer end, Player player) throws NonComparableElementException {
         int option;
         ArrayOrderedList<Bot> bots = new ArrayOrderedList<Bot>();

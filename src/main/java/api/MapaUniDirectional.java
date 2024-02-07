@@ -4,13 +4,28 @@ import Interfaces.IMapaUniDirectional;
 
 import java.util.Random;
 
+/**
+ * Classe que representa um mapa unidirecional.
+ * Esta classe extende a classe Mapa e implementa a interface IMapaUniDirectional.
+ * @author : André Faria
+ * @author : Daniela Mendes
+ */
 public class MapaUniDirectional extends Mapa implements IMapaUniDirectional {
 
+    /**
+     * Construtor da classe MapaUniDirectional
+     */
     public MapaUniDirectional() {
         super();
-
     }
 
+    /**
+     * Metodo que adiciona uma conexao entre dois vertices.
+     * E necessario criar este metodo e dar overridade de mapa, pois e preciso garantir que a conexao e unidirecional.
+     * Em vez de dividirmos por 2 como no mapa bidirecional, nao precisamos dividir pelas 2 arestas.
+     * @param numVertices Numero de vertices
+     * @param density Densidade
+     */
     @Override
     public void addConnection(int numVertices, int density) {
         Random rand = new Random();
@@ -28,6 +43,10 @@ public class MapaUniDirectional extends Mapa implements IMapaUniDirectional {
         }
     }
 
+    /**
+     * Metodo para imprimir o mapa unidirecional. Imprime a matriz de adjacencia e as conexoes para visualizar em String.
+     * @return String com o mapa unidirecional.
+     */
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder("MapaUniDirectional Adjacency Matrix:\n     ");

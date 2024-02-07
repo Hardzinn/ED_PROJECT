@@ -7,13 +7,29 @@ import api.Player;
 
 import java.util.Scanner;
 
+/**
+ * Classe que representa o menu das flags. Esta classe e responsavel por criar o menu das flags,
+ * permitindo ao jogador escolher a posicao da flag.
+ */
 public class FlagMenu {
+
+    /**
+     * Atributos da classe FlagMenu
+     * game - jogo a ser utilizado
+     */
     private Game game;
 
+    /**
+     * Construtor da classe FlagMenu
+     * @param game Jogo a ser utilizado
+     */
     public FlagMenu(Game game) {
         this.game = game;
     }
 
+    /**
+     * Metodo que permite criar as flags. Para isso teremos que identificar primeiro qual o jogador que vai criar as flags.
+     */
     public void flagMenu(){
         Scanner scanner= new Scanner(System.in);
 
@@ -37,6 +53,11 @@ public class FlagMenu {
 
     }
 
+    /**
+     * Metodo que permite criar a flag. Para isso teremos que identificar primeiro qual o jogador que vai criar a flag.
+     * @param player Jogador que vai criar a flag
+     * @param mapa Mapa a ser utilizado
+     */
     public void createFlag(Player player, Mapa mapa) {
         Scanner scanner= new Scanner(System.in);
         int option;

@@ -3,9 +3,15 @@ package Menus;
 import Exceptions.EmptyCollectionException;
 import Exceptions.NonComparableElementException;
 import api.*;
+import enums.MapaType;
 
 import java.util.Scanner;
 
+
+/**
+ * Classe que representa o menu do jogo. Esta classe e responsavel por criar um jogo,
+ * permitindo ao jogador escolher as opcaos que pretende.
+ */
 public class GameMenu {
 
     private Mapa mapa;
@@ -15,6 +21,10 @@ public class GameMenu {
     int choice;
 
 
+    /**
+     * Metodo que permite criar o menu do jogo. Neste menu o jogador pode escolher as opcoes que pretende para jogar o jogo.
+     * Pode escolher comecar um novo jogo, carregar um mapa, guardar um mapa, comecar o jogo ou sair do jogo.
+     */
     public void gameMenu() {
 
         int mapType;

@@ -3,67 +3,120 @@ package api;
 import Estruturas.Lists.ArrayOrderedList;
 import Exceptions.EmptyCollectionException;
 import Interfaces.IPlayer;
+import enums.MapaType;
 
-
+/**
+ * Classe que representa um jogador. Esta classe implementa a interface IPlayer.
+ * Esta classe e responsavel por criar um jogador, obter o nome do jogado e bots.
+ * @author : André Faria
+ * @author : Daniela Mendes
+ */
 public class Player implements IPlayer {
+
+    /**
+     * Atributos da classe Player
+     * name - nome do jogador
+     * numPlayer - numero do jogador
+     * numBots - numero de bots
+     * botIndex - indice do bot
+     * flag - flag do jogador
+     * bots - lista de bots
+     */
     private String name;
-    private int numPlayer;
     private int numBots;
     private int botIndex;
     private Flag flag;
     private ArrayOrderedList<Bot> bots;
 
+    /**
+     * Construtor da classe Player
+     * @param name Nome do jogador
+     */
     public Player(String name) {
         this.name = name;
         this.bots = new ArrayOrderedList<Bot>();
         this.botIndex = 0;
     }
 
+    /**
+     * Metodo que retorna o nome do jogador
+     * @return nome do jogador
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Metodo que define o nome do jogador
+     * @param name Nome do jogador
+     */
     public void setName(String name) {
         this.name = name;
     }
 
-    public int getNumPlayer() {
-        return numPlayer;
-    }
-
-    public void setNumPlayer(int numPlayer) {
-        this.numPlayer = numPlayer;
-    }
-
+    /**
+     * Metodo que retorna a flag do jogador
+     * @return flag do jogador
+     */
     public Flag getFlag() {
         return flag;
     }
 
+    /**
+     * Metodo que define a flag do jogador
+     * @param flag Flag do jogador
+     */
     public void setFlag(Flag flag) {
         this.flag = flag;
     }
 
+    /**
+     * Metodo que retorna a lista de bots
+     * @return lista de bots
+     */
     public ArrayOrderedList<Bot> getBots() {
         return bots;
     }
 
+    /**
+     * Metodo que define uma lista de bots para o jogador.
+     * @param bots Lista de bots
+     */
     public void setBots(ArrayOrderedList<Bot> bots) {
         this.bots = bots;
     }
 
+    /**
+     * Metodo que retorna o numero de bots
+     * @return numero de bots
+     */
     public int getNumBots() {
         return numBots;
     }
 
+    /**
+     * Metodo que define o numero de bots
+     * @param numBots Numero de bots
+     */
     public void setNumBots(int numBots) {
         this.numBots = numBots;
     }
 
+    /**
+     * Metodo que retorna a posição da flag
+     * @return posicao da flag
+     */
     public int getPositionFlag() {
         return flag.getPositionFlag();
     }
 
 
+    /**
+     * Metodo que nos permite comparar a posicao dos bots e verificar se estes tem a flag.
+     * Apos isso caso tenham a flag e estejam na mesma posicao, a flag e devolvida a base.
+     * @param player1 player 1
+     * @param player2 player 2
+     */
     public void checkBotHaveFlagIsInSamePos(Player player1, Player player2) {
         if (player1.getBots() == null || player2.getBots() == null) {
             throw new IllegalArgumentException("Bots list cannot be null");
@@ -93,6 +146,12 @@ public class Player implements IPlayer {
         }
     }
 
+    /**
+     * Metodo para verificar se o bot a mover tem flag e entra na mesma posicao que um bot inimigo sem flag.
+     * Se isso acontecer a flag e devolvida a base.
+     * @param player1 player 1
+     * @param player2 player 2
+     */
     public void checkFlagReturnToBase(Player player1, Player player2, int location) {
         for (int i = 0; i < player2.getNumBots(); i++) {
             Bot bot = player2.getBots().get(i);
@@ -104,6 +163,13 @@ public class Player implements IPlayer {
     }
 
 
+    /**
+     * Metodo que nos permite mover os bots . Quando captura a flag o bot retorna a base.
+     * @param player1 player 1
+     * @param player2 player 2
+     * @return 1 se o bot chegou a base, 0 se nao chegou
+     * @throws EmptyCollectionException Caso a lista de posicoes esteja vazia
+     */
     public int moveBot(Player player1, Player player2, MapaType type) throws EmptyCollectionException {
         for (int i = 0; i < numBots; i++) {
             Bot currentBot = bots.get(i);
@@ -114,7 +180,8 @@ public class Player implements IPlayer {
             }else
             {
                 flag.capture(player1);
-                System.out.println("\nBASE");
+                System.out.println("\nBASE: " + player1.getName() + " has captured the flag." +
+                        "\nReturning to the Base\n");
                 if (type == MapaType.MAPA_UNIDIRECIONAL) {
                     return moveBotToBaseUnidirecional(player1, player2);
                 } else {
@@ -127,6 +194,15 @@ public class Player implements IPlayer {
         return 0;
     }
 
+    /**
+     * Metodo que nos permite mover os bots para a base. Quando captura a flag o bot retorna a base.
+     * Utilizamos os metodos que verificam as posicoes dos bots e se estes tem a flag para devolver a flag a base.
+     * Metodo para mapa bidirecional
+     * @param player1 player 1
+     * @param player2 player 2
+     * @return 1 se o bot chegou a base, 0 se nao chegou
+     * @throws EmptyCollectionException Caso a lista de posicoes esteja vazia
+     */
     public int moveBotToBase(Player player1, Player player2) throws EmptyCollectionException {
         for (int i = 0; i < numBots; i++) {
             Bot currentBot = bots.get(botIndex);
@@ -152,6 +228,15 @@ public class Player implements IPlayer {
     }
 
 
+    /**
+     * Metodo que nos permite mover os bots para a base. Quando captura a flag o bot retorna a base.
+     * Utilizamos os metodos que verificam as posicoes dos bots e se estes tem a flag para devolver a flag a base.
+     * Metodo para mapa unidirecional
+     * @param player1 player 1
+     * @param player2 player 2
+     * @return 1 se o bot chegou a base, 0 se nao chegou
+     * @throws EmptyCollectionException Caso a lista de posicoes esteja vazia
+     */
     public int moveBotToBaseUnidirecional(Player player1,  Player player2) throws EmptyCollectionException {
         for (int i = 0; i < numBots; i++) {
             Bot currentBot = bots.get(botIndex);
